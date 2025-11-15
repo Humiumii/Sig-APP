@@ -1,14 +1,14 @@
-### Sig-APP: Proyecto SIG
+# Sig-APP: Proyecto SIG
 ## Requisitos:
 
 - Node.js 24.1.0 o superior
 
 ## Instrucciones de compilación
-# Backend:
+### Backend:
 - cd backend
 - node server.js
 
-# Frontend:
+### Frontend:
 - cd frontend/frontend
 - npm install       (primera vez)
 - npm install axios (primera vez)

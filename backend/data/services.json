@@ -1,0 +1,16 @@
+[
+  {
+    "id": "svc-0001",
+    "name": "Notaría Ejemplo",
+    "type": "notaria",
+    "address": "Calle Falsa 123",
+    "comuna": "Santiago",
+    "lat": -33.45,
+    "lon": -70.66,
+    "phone": "+56 2 1234 5678",
+    "hours": "Lun-Vie 09:00-14:00",
+    "free_level": "pagado",
+    "tags": ["documentos"],
+    "updated_at": "2025-11-15"
+  }
+]

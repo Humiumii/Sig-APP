@@ -12,5 +12,19 @@
     "free_level": "pagado",
     "tags": ["documentos"],
     "updated_at": "2025-11-15"
+  },
+  {
+    "id": "svc-0002",
+    "name": "Tribunal Ejemplo",
+    "type": "tribunal",
+    "address": "Calle Falsa 124",
+    "comuna": "Santiago",
+    "lat": -33.455,
+    "lon": -70.66,
+    "phone": "+56 2 1234 5678",
+    "hours": "Lun-Vie 09:00-14:00",
+    "free_level": "pagado",
+    "tags": ["documentos"],
+    "updated_at": "2025-11-15"
   }
 ]

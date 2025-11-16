@@ -18,21 +18,27 @@ export default function FilterBar({ filters, setFilters }) {
 
   return (
     <div style={styles.container}>
+      
+      {/* Tipo de servicio */}
       <select name="type" value={filters.type} onChange={handleChange}>
         <option value="">Tipo de servicio</option>
         <option value="notaria">Notaría</option>
+        <option value="tribunal">Tribunal</option>
+        <option value="fiscalia">Fiscalía</option>
+        <option value="registro_civil">Registro Civil</option>
+        <option value="centro_mediacion">Centro de Mediación</option>
         <option value="caj">CAJ</option>
-        <option value="defensoria">Defensoría</option>
-        <option value="mediacion">Mediación</option>
       </select>
 
+      {/* Comuna */}
       <select name="comuna" value={filters.comuna} onChange={handleChange}>
         <option value="">Comuna</option>
         <option value="Santiago">Santiago</option>
+        <option value="Estación Central">Estación Central</option>
         <option value="Providencia">Providencia</option>
-        <option value="Ñuñoa">Ñuñoa</option>
       </select>
 
+      {/* Búsqueda libre */}
       <input
         type="text"
         name="q"
@@ -41,6 +47,7 @@ export default function FilterBar({ filters, setFilters }) {
         onChange={handleChange}
       />
 
+      {/* Botón limpiar */}
       <button onClick={clearFilters}>Limpiar</button>
     </div>
   );

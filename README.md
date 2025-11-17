@@ -12,6 +12,7 @@
 - cd frontend/frontend
 - npm install       (primera vez)
 - npm install axios (primera vez)
+- npm install recharts (primera vez)
 - npm run dev
 
 Backend corriendo en http://localhost:3001

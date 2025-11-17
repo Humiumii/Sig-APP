@@ -1,0 +1,16 @@
+{
+  "comunas": {
+    "Santiago": {
+      "poblacion": 404495,
+      "superficie_km2": 22.4
+    },
+    "Estación Central": {
+      "poblacion": 140000,
+      "superficie_km2": 14.0
+    },
+    "Providencia": {
+      "poblacion": 151835,
+      "superficie_km2": 14.4
+    }
+  }
+}

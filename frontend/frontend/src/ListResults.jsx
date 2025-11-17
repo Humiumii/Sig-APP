@@ -29,7 +29,7 @@ export default function ListResults({ services, onSelect, onClose }) {
 const styles = {
   container: {
     position: "absolute",
-    top: "20px",
+    top: "90px",
     left: "20px",
     width: "300px",
     maxHeight: "90vh",
@@ -45,7 +45,7 @@ const styles = {
     position: "absolute",
     top: "5px",
     right: "8px",
-    background: "transparent",
+    background: "black",
     border: "none",
     fontSize: "18px",
     cursor: "pointer"

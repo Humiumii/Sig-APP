@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import MetricsPanel from "./MetricsPanel";
 import MapView from "./MapView";
 import FilterBar from "./FilterBar";
 import ListResults from "./ListResults";
+import GlobalMetricsPanel from "./GlobalMetricsPanel";
 
 export default function App() {
   const [filters, setFilters] = useState({
@@ -14,7 +15,7 @@ export default function App() {
 
   const [services, setServices] = useState([]);
   const [selected, setSelected] = useState(null);
-
+  const [showGlobalMetrics, setShowGlobalMetrics] = useState(false);
   // Controla si se muestra o no el panel de lista
   const [showList, setShowList] = useState(true);
 
@@ -37,7 +38,24 @@ export default function App() {
   return (
     <div style={{ height: "100vh", position: "relative" }}>
       <FilterBar filters={filters} setFilters={setFilters} />
-
+      <MetricsPanel comuna={filters.comuna} />
+      <button
+        onClick={() => setShowGlobalMetrics(true)}
+        style={{
+          position: "absolute",
+          top: 320,
+          right: 20,
+          zIndex: 2000,
+          padding: "8px 12px",
+          background: "white",
+          borderRadius: 8,
+          border: "1px solid #ddd",
+          boxShadow: "0 2px 5px rgba(0,0,0,0.15)",
+          cursor: "pointer"
+        }}
+>
+  Ver métricas globales
+</button>
       {/* Mostrar/Ocultar panel */}
       {showList ? (
         <ListResults
@@ -70,6 +88,9 @@ export default function App() {
       )}
 
       <MapView services={services} selected={selected} />
+      {showGlobalMetrics && (
+      <GlobalMetricsPanel onClose={() => setShowGlobalMetrics(false)} />
+      )}
     </div>
   );
 }

@@ -1,11 +1,12 @@
 # Sig-APP: Proyecto SIG
-## Requisitos:
+## Requisitos previos:
 
 - Node.js 24.1.0 o superior
 
 ## Instrucciones de compilación
 ### Backend:
 - cd backend
+- npm install node-fetch (primera vez)
 - node server.js
 
 ### Frontend:

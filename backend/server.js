@@ -1,12 +1,19 @@
 // backend/server.js
+
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 
+// importar orsProxy en CommonJS
+const orsProxy = require("./orsProxy.js");
+
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// montar proxy correctamente, después de crear app
+app.use("/api/ors", orsProxy);
 
 const DATA_FILE = path.join(__dirname, "data", "services.json");
 const META_FILE = path.join(__dirname, "data", "meta.json");

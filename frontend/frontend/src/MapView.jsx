@@ -1,4 +1,5 @@
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+// src/MapView.jsx
+import { MapContainer, TileLayer, Marker, Popup, Circle, useMap } from "react-leaflet";
 import L from "leaflet";
 import { useEffect, useRef } from "react";
 
@@ -8,37 +9,40 @@ const icon = new L.Icon({
   iconAnchor: [12, 41]
 });
 
-// --- Componente que centra el mapa ---
+// Centra el mapa cuando selected cambia
 function MapCenterer({ selected }) {
   const map = useMap();
-
   useEffect(() => {
     if (!selected) return;
-
     const lat = parseFloat(selected.lat);
     const lon = parseFloat(selected.lon);
-
     if (!isNaN(lat) && !isNaN(lon)) {
-      map.setView([lat, lon], 17, { animate: true });
+      map.setView([lat, lon], 16, { animate: true });
     }
   }, [selected, map]);
-
   return null;
 }
 
-export default function MapView({ services, selected }) {
+// Color según distancia (metros)
+function colorForDistance(d) {
+  // define rangos: 0-500 (verde), 500-1200 (amarillo), >1200 (rojo)
+  if (d <= 500) return "#2ecc71";
+  if (d <= 1200) return "#f1c40f";
+  return "#e74c3c";
+}
 
-  // Guardamos refs de todos los markers
+export default function MapView({ services = [], selected, heatmapData = [] }) {
   const markerRefs = useRef({});
 
-  // Cuando selected cambia → abrir popup del marker correcto
+  // abrir popup del seleccionado
   useEffect(() => {
     if (!selected) return;
-
     const ref = markerRefs.current[selected.id];
-
     if (ref && ref.openPopup) {
-      ref.openPopup();    // ← Esto abre el popup automáticamente
+      setTimeout(() => {
+        // abrir con pequeño delay para asegurar que el marker exista
+        try { ref.openPopup(); } catch {}
+      }, 250);
     }
   }, [selected]);
 
@@ -52,29 +56,52 @@ export default function MapView({ services, selected }) {
 
       <MapCenterer selected={selected} />
 
+      {/* marcadores */}
       {services.map(svc => {
         const lat = parseFloat(svc.lat);
         const lon = parseFloat(svc.lon);
-
         if (isNaN(lat) || isNaN(lon)) return null;
-
         return (
           <Marker
             key={svc.id}
             position={[lat, lon]}
             icon={icon}
-
-            // Guardar referencia del marker
-            ref={(ref) => {
-              if (ref) markerRefs.current[svc.id] = ref;
-            }}
+            ref={(r) => { if (r) markerRefs.current[svc.id] = r; }}
           >
             <Popup>
-              <b>{svc.name}</b><br />
-              {svc.address}<br />
-              {svc.comuna}
+              <div style={{ minWidth: 180 }}>
+                <b>{svc.name}</b><br />
+                <small>{svc.type} — {svc.comuna}</small><br />
+                <small>{svc.address}</small>
+              </div>
             </Popup>
           </Marker>
+        );
+      })}
+
+      {/* heatmap: círculos coloreados */}
+      {Array.isArray(heatmapData) && heatmapData.map((p, i) => {
+        const lat = parseFloat(p.lat);
+        const lon = parseFloat(p.lon);
+        const dist = Number(p.distance || 0);
+        if (isNaN(lat) || isNaN(lon)) return null;
+
+        const color = colorForDistance(dist);
+        // radius visual: puedes ajustarlo (metros en el mapa)
+        const radius = 200; // tamaño fijo; si quieres variable usa dist/50 por ej
+
+        return (
+          <Circle
+            key={`hm-${i}`}
+            center={[lat, lon]}
+            radius={radius}
+            pathOptions={{
+              color,
+              fillColor: color,
+              fillOpacity: 0.6,
+              weight: 0.5
+            }}
+          />
         );
       })}
     </MapContainer>
